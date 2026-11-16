@@ -1,0 +1,1090 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Perpustakaan Digital — jelajahi koleksi buku dan temukan bacaan favoritmu.">
+  <title>Ruang Baca — Perpustakaan Digital</title>
+  <style>
+    :root {
+      --navy: #17324d;
+      --blue: #245b83;
+      --teal: #2d8b83;
+      --mint: #e8f4ef;
+      --cream: #fbfaf6;
+      --ink: #243342;
+      --muted: #718096;
+      --line: #e6e9ec;
+      --white: #fff;
+      --shadow: 0 12px 34px rgba(25, 50, 70, .09);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Inter, "Segoe UI", Arial, sans-serif;
+      color: var(--ink);
+      background: var(--cream);
+    }
+
+    a { color: inherit; text-decoration: none; }
+    button, input { font: inherit; }
+    .container { width: min(1120px, calc(100% - 40px)); margin: auto; }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: rgba(251,250,246,.94);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(230,233,236,.8);
+    }
+
+    .nav {
+      min-height: 76px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      font-weight: 800;
+      font-size: 1.25rem;
+      color: var(--navy);
+      letter-spacing: -.4px;
+    }
+
+    .brand-mark {
+      width: 40px;
+      height: 40px;
+      border-radius: 13px;
+      display: grid;
+      place-items: center;
+      color: white;
+      background: var(--teal);
+      font-size: 21px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      color: #526273;
+      font-size: .94rem;
+    }
+
+    .nav-links a:hover { color: var(--teal); }
+
+    .nav-cta, .primary-btn {
+      border: 0;
+      background: var(--navy);
+      color: white;
+      border-radius: 12px;
+      padding: 12px 18px;
+      font-weight: 650;
+      cursor: pointer;
+      transition: .2s;
+    }
+
+    .nav-cta:hover, .primary-btn:hover {
+      background: var(--teal);
+      transform: translateY(-1px);
+    }
+
+    .menu-toggle {
+      display: none;
+      border: 1px solid var(--line);
+      background: white;
+      border-radius: 10px;
+      padding: 8px 11px;
+      font-size: 1.2rem;
+    }
+
+    .hero {
+      padding: 72px 0 60px;
+      background: radial-gradient(circle at 85% 20%, #dceee6 0, transparent 30%), linear-gradient(120deg,#f4f7f2,#fbfaf6 65%);
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.08fr .92fr;
+      align-items: center;
+      gap: 55px;
+    }
+
+    .eyebrow {
+      color: var(--teal);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-size: .76rem;
+      font-weight: 800;
+    }
+
+    h1 {
+      margin: 16px 0 18px;
+      max-width: 620px;
+      color: var(--navy);
+      font-size: clamp(2.5rem, 5vw, 4.3rem);
+      line-height: 1.08;
+      letter-spacing: -2px;
+    }
+
+    .hero p {
+      max-width: 540px;
+      color: #667788;
+      line-height: 1.8;
+      font-size: 1.05rem;
+    }
+
+    .search-wrap {
+      margin-top: 28px;
+      display: flex;
+      max-width: 540px;
+      padding: 7px;
+      gap: 8px;
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 15px;
+      box-shadow: var(--shadow);
+    }
+
+    .search-wrap input {
+      min-width: 0;
+      flex: 1;
+      border: 0;
+      outline: 0;
+      padding: 11px 12px;
+      color: var(--ink);
+    }
+
+    .search-wrap button {
+      border: 0;
+      border-radius: 10px;
+      background: var(--teal);
+      color: white;
+      padding: 0 20px;
+      cursor: pointer;
+      font-weight: 650;
+    }
+
+    .hero-note {
+      margin-top: 15px;
+      font-size: .85rem !important;
+      color: #8995a1 !important;
+    }
+
+    .hero-art {
+      min-height: 350px;
+      position: relative;
+      display: grid;
+      place-items: center;
+    }
+
+    .art-circle {
+      width: min(340px, 80vw);
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background: #dceee6;
+      position: absolute;
+    }
+
+    .book-stack {
+      position: relative;
+      width: 270px;
+      height: 270px;
+      display: grid;
+      place-items: center;
+    }
+
+    .book {
+      position: absolute;
+      width: 170px;
+      height: 220px;
+      border-radius: 9px 15px 15px 9px;
+      box-shadow: 12px 15px 25px #17324d25;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 23px 18px;
+      color: white;
+    }
+
+    .book b {
+      font-family: Georgia, serif;
+      font-size: 1.55rem;
+      line-height: 1.1;
+    }
+
+    .book small {
+      opacity: .85;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      font-size: .62rem;
+    }
+
+    .book.one { background: #245b83; transform: rotate(-13deg) translate(-43px,8px); }
+    .book.two { background: #d38b55; transform: rotate(10deg) translate(43px,4px); }
+    .book.three { background: #2d8b83; transform: rotate(-1deg) translate(0,-3px); }
+
+    .floating-tag {
+      position: absolute;
+      background: white;
+      border-radius: 13px;
+      padding: 13px 16px;
+      box-shadow: var(--shadow);
+      font-size: .82rem;
+      color: #526273;
+    }
+
+    .floating-tag strong {
+      display: block;
+      color: var(--navy);
+      font-size: 1.1rem;
+    }
+
+    .tag-top { top: 25px; right: 0; }
+    .tag-bottom { bottom: 25px; left: 0; }
+
+    section { padding: 68px 0; }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 20px;
+      margin-bottom: 28px;
+    }
+
+    .section-head h2 {
+      color: var(--navy);
+      font-size: clamp(1.7rem,3vw,2.25rem);
+      margin: 8px 0 0;
+      letter-spacing: -.8px;
+    }
+
+    .section-head p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .categories {
+      display: grid;
+      grid-template-columns: repeat(4,1fr);
+      gap: 16px;
+    }
+
+    .category {
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 17px;
+      padding: 21px;
+      text-align: left;
+      cursor: pointer;
+      transition: .2s;
+    }
+
+    .category:hover, .category.active {
+      border-color: #8abeb0;
+      background: #f0f8f4;
+      transform: translateY(-3px);
+    }
+
+    .category .emoji {
+      font-size: 1.7rem;
+      display: block;
+      margin-bottom: 13px;
+    }
+
+    .category strong {
+      display: block;
+      color: var(--navy);
+      margin-bottom: 5px;
+    }
+
+    .category span:last-child {
+      color: var(--muted);
+      font-size: .83rem;
+    }
+
+    .books-section { background: #f2f5f2; }
+
+    .filters {
+      display: flex;
+      gap: 9px;
+      flex-wrap: wrap;
+    }
+
+    .filter {
+      border: 1px solid #dce3e2;
+      background: white;
+      color: #617180;
+      border-radius: 30px;
+      padding: 9px 15px;
+      cursor: pointer;
+      font-size: .85rem;
+    }
+
+    .filter.active, .filter:hover {
+      background: var(--navy);
+      border-color: var(--navy);
+      color: white;
+    }
+
+    .book-grid {
+      display: grid;
+      grid-template-columns: repeat(4,1fr);
+      gap: 20px;
+      margin-top: 25px;
+    }
+
+    .book-card {
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 17px;
+      overflow: hidden;
+      transition: .2s;
+    }
+
+    .book-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow);
+    }
+
+    .cover {
+      height: 205px;
+      display: grid;
+      place-items: center;
+      padding: 20px;
+      color: white;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cover:before {
+      content: "";
+      position: absolute;
+      width: 170px;
+      height: 170px;
+      border: 1px solid #ffffff55;
+      border-radius: 50%;
+      right: -65px;
+      top: -65px;
+    }
+
+    .cover:after {
+      content: "";
+      position: absolute;
+      width: 120px;
+      height: 120px;
+      border: 1px solid #ffffff55;
+      border-radius: 50%;
+      left: -55px;
+      bottom: -55px;
+    }
+
+    .cover span {
+      position: relative;
+      z-index: 1;
+      font-family: Georgia,serif;
+      font-size: 1.45rem;
+      line-height: 1.2;
+      max-width: 180px;
+    }
+
+    .cover small {
+      position: absolute;
+      z-index: 1;
+      bottom: 15px;
+      font-size: .65rem;
+      letter-spacing: 1.5px;
+      opacity: .85;
+    }
+
+    .cover.c1 { background: linear-gradient(145deg,#245b83,#17324d); }
+    .cover.c2 { background: linear-gradient(145deg,#d38b55,#9d563e); }
+    .cover.c3 { background: linear-gradient(145deg,#438d79,#205c58); }
+    .cover.c4 { background: linear-gradient(145deg,#7b6ba6,#45416f); }
+    .cover.c5 { background: linear-gradient(145deg,#c06d78,#874354); }
+    .cover.c6 { background: linear-gradient(145deg,#6d8792,#344e60); }
+    .cover.c7 { background: linear-gradient(145deg,#b69a56,#75602c); }
+    .cover.c8 { background: linear-gradient(145deg,#568b9b,#28556a); }
+
+    .book-info { padding: 17px; }
+
+    .book-info .genre {
+      color: var(--teal);
+      text-transform: uppercase;
+      font-size: .68rem;
+      letter-spacing: 1px;
+      font-weight: 800;
+    }
+
+    .book-info h3 {
+      color: var(--navy);
+      font-size: 1rem;
+      margin: 8px 0 5px;
+    }
+
+    .book-info p {
+      color: var(--muted);
+      font-size: .84rem;
+      margin: 0 0 15px;
+    }
+
+    .book-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .read-btn {
+      border: 0;
+      background: #e8f4ef;
+      color: #28766d;
+      padding: 9px 13px;
+      border-radius: 9px;
+      font-weight: 700;
+      font-size: .82rem;
+      cursor: pointer;
+    }
+
+    .read-btn:hover { background: var(--teal); color: white; }
+
+    .save-btn {
+      border: 1px solid var(--line);
+      background: white;
+      color: #74818d;
+      border-radius: 9px;
+      padding: 8px 10px;
+      cursor: pointer;
+    }
+
+    .save-btn.saved {
+      color: #bd6b58;
+      border-color: #e9c8bf;
+      background: #fff6f3;
+    }
+
+    .empty {
+      grid-column: 1/-1;
+      text-align: center;
+      color: var(--muted);
+      padding: 45px 10px;
+      background: white;
+      border-radius: 15px;
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: .9fr 1.1fr;
+      gap: 55px;
+      align-items: center;
+    }
+
+    .about-panel {
+      background: var(--mint);
+      border-radius: 22px;
+      padding: 35px;
+      min-height: 280px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .about-panel .big-icon { font-size: 3.5rem; }
+
+    .about-panel h3 {
+      color: var(--navy);
+      font-family: Georgia,serif;
+      font-size: 1.8rem;
+      margin: 18px 0 8px;
+    }
+
+    .about-panel p, .about-copy p {
+      color: #687888;
+      line-height: 1.8;
+    }
+
+    .about-copy h2 {
+      color: var(--navy);
+      font-size: 2rem;
+      margin: 10px 0;
+    }
+
+    .stats {
+      display: flex;
+      gap: 35px;
+      margin-top: 25px;
+    }
+
+    .stats strong {
+      display: block;
+      color: var(--teal);
+      font-size: 1.6rem;
+    }
+
+    .stats span {
+      color: var(--muted);
+      font-size: .8rem;
+    }
+
+    .contact {
+      background: var(--navy);
+      color: white;
+      padding: 48px 0;
+    }
+
+    .contact-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 25px;
+    }
+
+    .contact h2 { margin: 0 0 8px; font-size: 1.8rem; }
+    .contact p { color: #c3d0d9; margin: 0; line-height: 1.6; }
+
+    .contact a {
+      background: white;
+      color: var(--navy);
+      border-radius: 11px;
+      padding: 13px 18px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    footer { padding: 24px 0; color: #87939d; font-size: .83rem; }
+
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .modal-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 30;
+      background: #10233499;
+      padding: 20px;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-backdrop.show { display: flex; }
+
+    .modal {
+      width: min(480px,100%);
+      background: white;
+      border-radius: 20px;
+      padding: 28px;
+      box-shadow: 0 25px 70px #10233455;
+      position: relative;
+    }
+
+    .modal h2 { color: var(--navy); margin: 0 35px 10px 0; }
+    .modal p { color: #687888; line-height: 1.7; }
+
+    .modal-close {
+      position: absolute;
+      right: 18px;
+      top: 15px;
+      border: 0;
+      background: #f0f3f3;
+      border-radius: 50%;
+      width: 34px;
+      height: 34px;
+      cursor: pointer;
+      font-size: 1.1rem;
+    }
+
+    .modal-note {
+      background: #f2f7f4;
+      border-radius: 12px;
+      padding: 13px;
+      font-size: .85rem;
+      color: #527267 !important;
+    }
+
+    @media (max-width: 850px) {
+      .hero-grid { gap: 15px; grid-template-columns: 1fr .8fr; }
+      .categories, .book-grid { grid-template-columns: repeat(2,1fr); }
+      .nav-links { gap: 16px; }
+      .about-grid { gap: 28px; }
+    }
+
+    @media (max-width: 650px) {
+      .container { width: min(100% - 30px, 540px); }
+      .nav { min-height: 66px; }
+      .menu-toggle { display: block; }
+      .nav-cta { display: none; }
+
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 66px;
+        left: 0;
+        right: 0;
+        background: var(--cream);
+        padding: 18px 22px 22px;
+        border-bottom: 1px solid var(--line);
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .nav-links.open { display: flex; }
+      .hero { padding: 48px 0 38px; }
+      .hero-grid { grid-template-columns: 1fr; }
+      .hero-art { min-height: 290px; }
+      .art-circle { width: 260px; }
+      .book-stack { transform: scale(.82); }
+      .tag-top { right: 3%; top: 8px; }
+      .tag-bottom { left: 2%; bottom: 5px; }
+      section { padding: 50px 0; }
+
+      .section-head {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .categories { gap: 10px; }
+      .category { padding: 16px; }
+      .book-grid { gap: 12px; }
+      .cover { height: 165px; }
+      .cover span { font-size: 1.15rem; }
+      .book-info { padding: 13px; }
+      .book-info h3 { font-size: .92rem; }
+      .about-grid { grid-template-columns: 1fr; }
+      .about-panel { min-height: 220px; }
+      .stats { gap: 24px; }
+
+      .contact-inner {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+    }
+
+    @media (max-width: 370px) {
+      .categories, .book-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="container nav">
+      <a class="brand" href="#beranda">
+        <span class="brand-mark">📚</span> Ruang Baca
+      </a>
+
+      <nav class="nav-links" id="navLinks">
+        <a href="#beranda">Beranda</a>
+        <a href="#kategori">Kategori</a>
+        <a href="#koleksi">Koleksi Buku</a>
+        <a href="#tentang">Tentang</a>
+      </nav>
+
+      <a class="nav-cta" href="#koleksi">Jelajahi Buku</a>
+      <button class="menu-toggle" id="menuToggle" aria-label="Buka menu">☰</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="beranda">
+      <div class="container hero-grid">
+        <div>
+          <div class="eyebrow">Perpustakaan Digital</div>
+          <h1>Temukan dunia baru di setiap halaman.</h1>
+          <p>Selamat datang di Ruang Baca, tempat untuk menjelajahi pengetahuan, menemukan inspirasi, dan menikmati koleksi bacaan kapan saja.</p>
+
+          <form class="search-wrap" id="searchForm">
+            <input id="searchInput" type="search" placeholder="Cari judul buku atau penulis..." aria-label="Cari buku">
+            <button type="submit">Cari Buku</button>
+          </form>
+
+          <p class="hero-note">Mulai membaca, perluas wawasan, dan tumbuh setiap hari.</p>
+        </div>
+
+        <div class="hero-art" aria-label="Ilustrasi tumpukan buku">
+          <div class="art-circle"></div>
+
+          <div class="book-stack">
+            <div class="book one">
+              <small>Ruang Baca</small>
+              <b>Jelajah<br>Ilmu</b>
+              <small>Koleksi Digital</small>
+            </div>
+
+            <div class="book two">
+              <small>Ruang Baca</small>
+              <b>Inspirasi<br>Harian</b>
+              <small>Temukan Cerita</small>
+            </div>
+
+            <div class="book three">
+              <small>Perpustakaan</small>
+              <b>Belajar<br>Tanpa Batas</b>
+              <small>Baca • Belajar • Berkarya</small>
+            </div>
+          </div>
+
+          <div class="floating-tag tag-top">
+            <strong>100%</strong> Akses fleksibel
+          </div>
+          <div class="floating-tag tag-bottom">
+            <strong>📖 Baca</strong> Kapan saja
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="kategori">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <div class="eyebrow">Jelajahi minatmu</div>
+            <h2>Kategori pilihan</h2>
+          </div>
+          <p>Pilih kategori dan temukan bacaan yang sesuai<br> dengan rasa ingin tahumu.</p>
+        </div>
+
+        <div class="categories">
+          <button class="category" data-category="Pendidikan">
+            <span class="emoji">🎓</span>
+            <strong>Pendidikan</strong>
+            <span>Belajar dan pengetahuan</span>
+          </button>
+
+          <button class="category" data-category="Teknologi">
+            <span class="emoji">💻</span>
+            <strong>Teknologi</strong>
+            <span>Inovasi dan dunia digital</span>
+          </button>
+
+          <button class="category" data-category="Sastra">
+            <span class="emoji">✍️</span>
+            <strong>Sastra</strong>
+            <span>Novel, cerita, dan puisi</span>
+          </button>
+
+          <button class="category" data-category="Sejarah">
+            <span class="emoji">🏛️</span>
+            <strong>Sejarah</strong>
+            <span>Peristiwa dan peradaban</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <section class="books-section" id="koleksi">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <div class="eyebrow">Temukan bacaan</div>
+            <h2>Koleksi buku digital</h2>
+          </div>
+          <p id="resultCount">Menampilkan koleksi pilihan</p>
+        </div>
+
+        <div class="filters" id="filters">
+          <button class="filter active" data-filter="Semua">Semua</button>
+          <button class="filter" data-filter="Pendidikan">Pendidikan</button>
+          <button class="filter" data-filter="Teknologi">Teknologi</button>
+          <button class="filter" data-filter="Sastra">Sastra</button>
+          <button class="filter" data-filter="Sejarah">Sejarah</button>
+        </div>
+
+        <div class="book-grid" id="bookGrid"></div>
+      </div>
+    </section>
+
+    <section id="tentang">
+      <div class="container about-grid">
+        <div class="about-panel">
+          <div class="big-icon">🌱</div>
+          <h3>Pengetahuan untuk semua.</h3>
+          <p>Perpustakaan adalah ruang tumbuh bagi ide, kreativitas, dan pembelajaran sepanjang hayat.</p>
+        </div>
+
+        <div class="about-copy">
+          <div class="eyebrow">Tentang Ruang Baca</div>
+          <h2>Lebih dekat dengan ilmu, lebih luas melihat dunia.</h2>
+          <p>Ruang Baca adalah contoh website perpustakaan digital yang dirancang untuk memudahkan pengunjung mengenal koleksi buku berdasarkan kategori dan melakukan pencarian judul maupun penulis.</p>
+          <p>Website ini merupakan prototipe untuk tugas atau pengembangan awal. Data buku yang ditampilkan adalah contoh dan dapat diganti dengan katalog serta tautan e-book resmi milik perpustakaan.</p>
+
+          <div class="stats">
+            <div><strong>8+</strong><span>Contoh koleksi</span></div>
+            <div><strong>4</strong><span>Kategori bacaan</span></div>
+            <div><strong>24/7</strong><span>Akses website</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact">
+      <div class="container contact-inner">
+        <div>
+          <h2>Siap menemukan bacaan baru?</h2>
+          <p>Jelajahi koleksi dan mulai perjalanan pengetahuanmu hari ini.</p>
+        </div>
+        <a href="#koleksi">Lihat Koleksi Buku →</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-inner">
+      <span>© <span id="year"></span> Ruang Baca — Perpustakaan Digital</span>
+      <span>Dibuat untuk mendukung budaya membaca 📚</span>
+    </div>
+  </footer>
+
+  <div class="modal-backdrop" id="bookModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal">
+      <button class="modal-close" id="modalClose" aria-label="Tutup">×</button>
+      <div class="eyebrow" id="modalGenre">Informasi Buku</div>
+      <h2 id="modalTitle">Judul Buku</h2>
+      <p id="modalAuthor"></p>
+      <p id="modalDescription"></p>
+      <p class="modal-note">Ini adalah contoh katalog. Tambahkan tautan e-book atau file PDF yang legal dan telah mendapat izin agar tombol baca dapat membuka isi buku.</p>
+      <button class="primary-btn" id="modalOk">Mengerti</button>
+    </div>
+  </div>
+
+  <script>
+    const books = [
+      {
+        id:1,
+        title:"Pendidikan untuk Masa Depan",
+        author:"Tim Ruang Baca",
+        category:"Pendidikan",
+        desc:"Pengantar tentang pembelajaran, kreativitas, dan keterampilan yang dibutuhkan pada masa depan.",
+        cover:"c1"
+      },
+      {
+        id:2,
+        title:"Mengenal Dunia Teknologi",
+        author:"Andi Pratama",
+        category:"Teknologi",
+        desc:"Mengenal perkembangan teknologi informasi dan pengaruhnya dalam kehidupan sehari-hari.",
+        cover:"c2"
+      },
+      {
+        id:3,
+        title:"Senja di Ujung Cerita",
+        author:"Nadia Putri",
+        category:"Sastra",
+        desc:"Kumpulan cerita pendek tentang persahabatan, keluarga, dan perjalanan menemukan makna.",
+        cover:"c3"
+      },
+      {
+        id:4,
+        title:"Jejak Peradaban Nusantara",
+        author:"Bima Santosa",
+        category:"Sejarah",
+        desc:"Menyusuri sejarah dan warisan budaya yang membentuk keberagaman Nusantara.",
+        cover:"c4"
+      },
+      {
+        id:5,
+        title:"Belajar Sepanjang Hayat",
+        author:"Dewi Lestari",
+        category:"Pendidikan",
+        desc:"Gagasan dan strategi untuk membangun kebiasaan belajar sepanjang kehidupan.",
+        cover:"c5"
+      },
+      {
+        id:6,
+        title:"Literasi di Era Digital",
+        author:"Rizky Maulana",
+        category:"Teknologi",
+        desc:"Membahas literasi digital, informasi, dan cara menjadi pengguna teknologi yang bijak.",
+        cover:"c6"
+      },
+      {
+        id:7,
+        title:"Kisah dari Masa Lampau",
+        author:"S. Wibowo",
+        category:"Sejarah",
+        desc:"Kumpulan kisah sejarah yang membantu pembaca memahami perubahan masyarakat.",
+        cover:"c7"
+      },
+      {
+        id:8,
+        title:"Puisi dan Imajinasi",
+        author:"Maya Anindya",
+        category:"Sastra",
+        desc:"Kumpulan puisi tentang alam, harapan, dan pengalaman manusia.",
+        cover:"c8"
+      }
+    ];
+
+    const grid = document.getElementById("bookGrid");
+    const searchInput = document.getElementById("searchInput");
+    const resultCount = document.getElementById("resultCount");
+
+    let activeFilter = "Semua";
+    let searchTerm = "";
+    const saved = new Set();
+
+    function renderBooks() {
+      const filtered = books.filter(book => {
+        const matchesCategory =
+          activeFilter === "Semua" || book.category === activeFilter;
+
+        const haystack =
+          `${book.title} ${book.author} ${book.category}`.toLowerCase();
+
+        return matchesCategory && haystack.includes(searchTerm.toLowerCase());
+      });
+
+      resultCount.textContent = `${filtered.length} buku ditemukan`;
+
+      if (!filtered.length) {
+        grid.innerHTML =
+          '<div class="empty">Belum ada buku yang cocok. Coba kata kunci atau kategori lain.</div>';
+        return;
+      }
+
+      grid.innerHTML = filtered.map(book => `
+        <article class="book-card">
+          <div class="cover ${book.cover}">
+            <span>${book.title}</span>
+            <small>RUANG BACA • DIGITAL</small>
+          </div>
+          <div class="book-info">
+            <span class="genre">${book.category}</span>
+            <h3>${book.title}</h3>
+            <p>${book.author}</p>
+            <div class="book-actions">
+              <button class="read-btn" data-read="${book.id}">Detail Buku</button>
+              <button class="save-btn ${saved.has(book.id) ? "saved" : ""}"
+                data-save="${book.id}" aria-label="Simpan buku">
+                ${saved.has(book.id) ? "♥" : "♡"}
+              </button>
+            </div>
+          </div>
+        </article>
+      `).join("");
+    }
+
+    document.getElementById("searchForm").addEventListener("submit", event => {
+      event.preventDefault();
+      searchTerm = searchInput.value.trim();
+      activeFilter = "Semua";
+
+      document.querySelectorAll(".filter").forEach(btn =>
+        btn.classList.toggle("active", btn.dataset.filter === "Semua")
+      );
+
+      document.querySelectorAll(".category").forEach(btn =>
+        btn.classList.remove("active")
+      );
+
+      renderBooks();
+      document.getElementById("koleksi").scrollIntoView({behavior:"smooth"});
+    });
+
+    document.getElementById("filters").addEventListener("click", event => {
+      const btn = event.target.closest("[data-filter]");
+      if (!btn) return;
+
+      activeFilter = btn.dataset.filter;
+
+      document.querySelectorAll(".filter").forEach(item =>
+        item.classList.toggle("active", item === btn)
+      );
+
+      document.querySelectorAll(".category").forEach(item =>
+        item.classList.toggle("active", item.dataset.category === activeFilter)
+      );
+
+      renderBooks();
+    });
+
+    document.querySelector(".categories").addEventListener("click", event => {
+      const btn = event.target.closest("[data-category]");
+      if (!btn) return;
+
+      activeFilter = btn.dataset.category;
+      searchTerm = "";
+      searchInput.value = "";
+
+      document.querySelectorAll(".filter").forEach(item =>
+        item.classList.toggle("active", item.dataset.filter === activeFilter)
+      );
+
+      document.querySelectorAll(".category").forEach(item =>
+        item.classList.toggle("active", item === btn)
+      );
+
+      renderBooks();
+      document.getElementById("koleksi").scrollIntoView({behavior:"smooth"});
+    });
+
+    grid.addEventListener("click", event => {
+      const read = event.target.closest("[data-read]");
+      const save = event.target.closest("[data-save]");
+
+      if (read) {
+        const book = books.find(
+          item => item.id === Number(read.dataset.read)
+        );
+
+        document.getElementById("modalGenre").textContent = book.category;
+        document.getElementById("modalTitle").textContent = book.title;
+        document.getElementById("modalAuthor").textContent =
+          `Penulis: ${book.author}`;
+        document.getElementById("modalDescription").textContent = book.desc;
+        document.getElementById("bookModal").classList.add("show");
+      }
+
+      if (save) {
+        const id = Number(save.dataset.save);
+        saved.has(id) ? saved.delete(id) : saved.add(id);
+        renderBooks();
+      }
+    });
+
+    function closeModal() {
+      document.getElementById("bookModal").classList.remove("show");
+    }
+
+    document.getElementById("modalClose").addEventListener("click", closeModal);
+    document.getElementById("modalOk").addEventListener("click", closeModal);
+
+    document.getElementById("bookModal").addEventListener("click", event => {
+      if (event.target.id === "bookModal") closeModal();
+    });
+
+    document.addEventListener("keydown", event => {
+      if (event.key === "Escape") closeModal();
+    });
+
+    document.getElementById("menuToggle").addEventListener("click", () =>
+      document.getElementById("navLinks").classList.toggle("open")
+    );
+
+    document.querySelectorAll("#navLinks a").forEach(link =>
+      link.addEventListener("click", () =>
+        document.getElementById("navLinks").classList.remove("open")
+      )
+    );
+
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    renderBooks();
+  </script>
+</body>
+</html>
